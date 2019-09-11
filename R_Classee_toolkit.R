@@ -12,7 +12,6 @@ library(Rmisc)
 options(scipen = 999)
 options(stringsAsFactors = FALSE)
 
-
 ###########################
 ### VIZ TOOLKIT
 ###########################
@@ -229,7 +228,7 @@ classee_binary_var_facet <- function(data=data_sample_binary_facet, z=1.96, titl
   
   if(scale_free) p <- p + facet_wrap(c0 ~ c1, scales='free') 
   else p <- p + facet_wrap(c0 ~ c1) 
-    
+  
   return(p)
 }
 
@@ -332,12 +331,12 @@ for(sd1 in sd_1){  for(sd0 in sd_0){
       data <- cbind( data, n0 - data[2])
       data <- cbind( data, n1 - data[3])
       
-    # IMPORTANT: 
-    # The variable `index` is used to order the data to calculate the variance.
-    # It is also used to order the graphs with ggplot faceting.
-    # (as strings, thus avoid pasting numbers with decimals)
-    # The `index` values must be unique for each graph.
-    # (1 graph = 1 set of parameters n, mu, sd for classes 0 and 1)
+      # IMPORTANT: 
+      # The variable `index` is used to order the data to calculate the variance.
+      # It is also used to order the graphs with ggplot faceting.
+      # (as strings, thus avoid pasting numbers with decimals)
+      # The `index` values must be unique for each graph.
+      # (1 graph = 1 set of parameters n, mu, sd for classes 0 and 1)
       
       i1_m <- m1 * 100
       i0_m <- m0 * 100
@@ -375,5 +374,5 @@ confmat <- rbind(c(316,0,8,23,51,0,1),
                  c(0,0,0,8,0,313,0),
                  c(0,0,0,0,0,0,324))
 
-colnames(confmat) <- paste('Actual',1:length(class_base))
-rownames(confmat) <- paste('Predicted',1:length(class_base))
+colnames(confmat) <- paste('Actual',1:ncol(confmat))
+rownames(confmat) <- paste('Predicted',1:ncol(confmat))
