@@ -27,6 +27,7 @@ classee_binary(data)
 # Check the data format
 data_multi <- classee_sample_multi()
 
+# A confusion matrix (a data frame, column & row names are ignored)
             Actual 1 Actual 2 Actual 3 Actual 4 Actual 5 Actual 6 Actual 7
 Predicted 1      316        0        8       23       51        0        1
 Predicted 2        0      327        0        0        0        0        0
