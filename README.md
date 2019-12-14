@@ -1,6 +1,6 @@
 # Classee - Visualization of classification errors
 
-Simplified visualization for binary and multiclass classification.
+R code to make simplified visualization of classification error and bias.
 
 ![Image](example_binary.png "icon")
 
