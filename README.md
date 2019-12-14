@@ -47,7 +47,7 @@ classee_multiclass(data_multi)
 
 ```r
 # Make the plot above
-classee_binary(data, vertical=true)
+classee_binary(data, vertical=TRUE)
 ```
 
 ![Image](example_variance.png "icon")
