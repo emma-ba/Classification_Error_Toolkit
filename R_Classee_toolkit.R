@@ -305,3 +305,62 @@ classee_sample_multi <- function(){
   rownames(confmat) <- paste('Predicted',1:ncol(confmat))
   return(confmat)
 }
+
+###########################
+### DATA FORMATING
+###########################
+#
+# INPUT
+# actual_class    Vector of true class labels (groundtruth test set).
+# predicted_prob  Vector of predicted probability of being positive.
+#                 The positive class will be the label that comes first 
+#                 in alphabetical order (l.323).
+#                 predicted_prob must have the same length as actual_class
+#                 and its values must be between 0 and 1.
+# nbin  Number of thresholds used to measure errors, and draw histograms.
+#
+# OUTPUT
+# A tibble in the correct format to be visualized with the functions
+# classee_binary() and classee_binary_var().
+#
+# USAGE
+# classee_prep_data(class_labels, probabilities) %>% classee_binary()
+# classee_prep_data(class_labels, probabilities, n=50) %>% classee_binary_var()
+
+classee_prep_data <- function(actual_class = c(rep('C1',100),rep('C0',100)), 
+                              predicted_prob = c(rnorm(100, 0.6, 0.1),
+                                                 rnorm(100, 0.4, 0.1)
+                              ),
+                              nbin=20){
+  n <- predicted_prob %>% length
+  actual_class <- actual_class %>% as.character()
+  class <- actual_class %>% unique %>% sort %>% unlist %>% as.vector
+  n0 <- actual_class[ actual_class == class[1] ] %>% length
+  n1 <- actual_class[ actual_class == class[2] ] %>% length
+  
+  threshold <- 1:(nbin-1)/nbin
+  threshold <- c(0,threshold,1)
+  tp <- fn <- tn <- fp <- c()
+  for(thres in threshold){
+    n1_pred <- predicted_prob[ predicted_prob >= thres ] 
+    n1_class <- actual_class[ predicted_prob >= thres ] 
+    tp_thres <- n1_pred[ n1_class == class[2] ] %>% length
+    fp_thres <- n1_pred[ n1_class == class[1] ] %>% length 
+    
+    tp <- c(tp, tp_thres)
+    fn <- c(fn, n1 - tp_thres)
+    tn <- c(tn, n0 - fp_thres)
+    fp <- c(fp, fp_thres)
+  }
+  
+  tibble(threshold=threshold) %>% 
+    mutate(TP = tp) %>%
+    mutate(FN = -1*fn) %>%
+    mutate(TN = -1*tn) %>%
+    mutate(FP = fp) %>% 
+    gather(TP,FN,TN,FP,key='output',value='nitem') %>%
+    mutate(threshold = as.character(threshold)) %>%
+    mutate(class = ifelse(output %in% c('TP','FN'), 'C1', 'C0')) %>%
+    return
+}
+
