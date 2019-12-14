@@ -4,7 +4,7 @@ R code to make simplified visualization of classification error and bias.
 
 ![Image](example_binary.png "icon")
 
-```python
+```
 # Check the data format
 data <- classee_sample_binary()
 
