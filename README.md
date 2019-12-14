@@ -79,6 +79,37 @@ classee_binary_var_facet(data_facet)
 classee_binary_facet(data_facet)
 ```
 
+# Prepare binary data
+
+The function can format your data, from vectors of label and probability, to classee-compliant data.
+
+Input:
+actual_class    Vector of true class labels (groundtruth test set).
+
+predicted_prob  Vector of predicted probability of being positive.
+                The positive class will be the label that comes first
+                in alphabetical order (l.323).
+                predicted_prob must have the same length as actual_class
+                and its values must be between 0 and 1.
+
+nbin            Number of thresholds used to measure errors, and draw histograms.
+
+Output:
+A tibble in the correct format to be visualized with the functions classee_binary() and classee_binary_var().
+
+
+```R
+# Function to format data.
+classee_prep_data <- function(actual_class = c(rep('C1',100),rep('C0',100)), 
+                              predicted_prob = c(rnorm(100, 0.6, 0.1),
+                                                 rnorm(100, 0.4, 0.1)
+                              ),
+                              nbin=20){...}
+  
+# Usage
+classee_prep_data(class_labels, probabilities) %>% classee_binary()
+```
+
 # Citation
 
 Supporting End-User Understanding of Classification Errors: Visualization and Usability Issues.
