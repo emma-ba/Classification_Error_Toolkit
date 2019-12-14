@@ -23,7 +23,7 @@ classee_binary(data)
 
 ![Image](example_multiclass.png "icon")
 
-```javascript
+```R
 # Check the data format
 data_multi <- classee_sample_multi()
 
@@ -45,21 +45,21 @@ classee_multiclass(data_multi)
 
 ![Image](example_vertical.png "icon")
 
-```python
+```R
 # Make the plot above
 classee_binary(data, vertical=TRUE)
 ```
 
 ![Image](example_variance.png "icon")
 
-```python
+```R
 # Make the plot above
 classee_binary_var(data)
 ```
 
 ![Image](example_facet.png "icon")
 
-```python
+```R
 # Check the data format
 data_facet <- classee_sample_binary_facet()
 
